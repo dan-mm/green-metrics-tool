@@ -147,6 +147,4 @@ runs:
       run: |
         source ../venv/bin/activate
         python3 -m ${{ inputs.tests-command }} -rA | tee /tmp/test-results.txt
-
-    - name: Finished SSH
-      run: echo Done!
+        cat /tmp/test-results.txt | grep -oPz '(=*) short test summary(.*\n)*' >> $GITHUB_STEP_SUMMARY
