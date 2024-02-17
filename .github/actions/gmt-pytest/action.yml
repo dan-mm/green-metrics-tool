@@ -138,7 +138,8 @@ runs:
     - name: Start Test container
       shell: bash
       run: |
-        source venv/bin/activate && ./tests/start-test-containers.sh -d
+        source venv/bin/activate
+        cd tests && ./start-test-containers.sh -d
    
     - name: Sleep for 10 seconds
       run: sleep 10s
