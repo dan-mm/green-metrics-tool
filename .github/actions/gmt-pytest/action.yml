@@ -127,10 +127,10 @@ runs:
     #     ./stop-test-containers.sh
 
     - name: run test setup script
-        shell: bash
-        run: |
-          source venv/bin/activate
-          cd tests && python3 setup-test-env.py
+      shell: bash
+      run: |
+        source venv/bin/activate
+        cd tests && python3 setup-test-env.py
 
     - name: Start Test container
       shell: bash
