@@ -23,10 +23,10 @@ jobs:
           ref: 'main'
           submodules: 'true'
 
-      - name: Eco CI Energy Estimation - Initialize
-        uses: green-coding-solutions/eco-ci-energy-estimation@v2
-        with:
-          task: start-measurement
+      # - name: Eco CI Energy Estimation - Initialize
+      #   uses: green-coding-solutions/eco-ci-energy-estimation@v2
+      #   with:
+      #     task: start-measurement
 
       - if: ${{ github.event_name == 'workflow_dispatch' || steps.check-date.outputs.should_run == 'true'}}
         name: 'Setup, Run, and Teardown Tests'
@@ -35,14 +35,14 @@ jobs:
          metrics-to-turn-off: '--categories RAPL Machine Sensors Debug CGroupV2 MacOS GPU --providers PsuEnergyAcSdiaMachineProvider'
          github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Eco CI Energy Estimation - Get Measurement
-        uses: green-coding-solutions/eco-ci-energy-estimation@v2
-        with:
-          task: get-measurement
-          branch: main
+      # - name: Eco CI Energy Estimation - Get Measurement
+      #   uses: green-coding-solutions/eco-ci-energy-estimation@v2
+      #   with:
+      #     task: get-measurement
+      #     branch: main
 
-      - name: Eco CI Energy Estimation - End Measurement
-        uses: green-coding-solutions/eco-ci-energy-estimation@v2
-        with:
-          task: display-results
-          branch: main
+      # - name: Eco CI Energy Estimation - End Measurement
+      #   uses: green-coding-solutions/eco-ci-energy-estimation@v2
+      #   with:
+      #     task: display-results
+      #     branch: main
