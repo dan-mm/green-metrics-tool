@@ -1,10 +1,10 @@
 name: Build and Push Containers
 on:
-  pull_request:
-    types:
-      - closed
-    paths:
-      - 'docker/auxiliary-containers/**/Dockerfile'
+  # pull_request:
+  #   types:
+  #     - closed
+  #   paths:
+  #     - 'docker/auxiliary-containers/**/Dockerfile'
 
   workflow_dispatch:
     inputs:

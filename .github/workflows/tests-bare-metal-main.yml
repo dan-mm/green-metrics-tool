@@ -1,8 +1,8 @@
 name: Daily Test Run - Bare Metal - Main Branch
 run-name: Scheduled - main branch
 on:
-  schedule:
-    - cron: '0 */6 * * *'
+  # schedule:
+  #   - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
