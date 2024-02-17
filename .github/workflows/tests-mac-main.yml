@@ -1,0 +1,48 @@
+name: Daily Test Run - Virtual Machine - Main Branch
+run-name: Scheduled - main branch
+on:
+  workflow_dispatch:
+
+jobs:
+  run-tests-main:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - id: check-date
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        uses: green-coding-solutions/eco-ci-activity-checker@v1
+        with:
+          branch: 'main'
+
+      - if: ${{ github.event_name == 'workflow_dispatch' || steps.check-date.outputs.should_run == 'true'}}
+        name: 'Checkout repository'
+        uses: actions/checkout@v4
+        with:
+          ref: 'main'
+          submodules: 'true'
+
+      - name: Eco CI Energy Estimation - Initialize
+        uses: green-coding-solutions/eco-ci-energy-estimation@v2
+        with:
+          task: start-measurement
+
+      - if: ${{ github.event_name == 'workflow_dispatch' || steps.check-date.outputs.should_run == 'true'}}
+        name: 'Setup, Run, and Teardown Tests'
+        uses: ./.github/actions/gmt-pytest
+        with:
+         metrics-to-turn-off: '--categories RAPL Machine Sensors Debug CGroupV2 MacOS GPU --providers PsuEnergyAcSdiaMachineProvider'
+         github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Eco CI Energy Estimation - Get Measurement
+        uses: green-coding-solutions/eco-ci-energy-estimation@v2
+        with:
+          task: get-measurement
+          branch: main
+
+      - name: Eco CI Energy Estimation - End Measurement
+        uses: green-coding-solutions/eco-ci-energy-estimation@v2
+        with:
+          task: display-results
+          branch: main
