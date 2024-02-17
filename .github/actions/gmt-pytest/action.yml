@@ -42,7 +42,6 @@ runs:
 
     - name: install script and packages
       if: runner.os == 'macOS'
-      timeout-minutes: 10
       shell: bash
       working-directory: ${{ inputs.gmt-directory }}
       run: |
