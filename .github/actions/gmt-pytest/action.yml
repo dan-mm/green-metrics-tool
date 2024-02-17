@@ -132,6 +132,9 @@ runs:
         source venv/bin/activate
         cd tests && python3 setup-test-env.py
 
+    - name: Setup upterm session
+      uses: lhotari/action-upterm@v1
+      
     - name: Start Test container
       shell: bash
       run: |
