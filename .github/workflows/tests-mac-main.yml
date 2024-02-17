@@ -1,5 +1,5 @@
-name: Daily Test Run - Virtual Machine - Main Branch
-run-name: Scheduled - main branch
+name: Mac Tests
+run-name: Mac tests
 on:
   workflow_dispatch:
 
