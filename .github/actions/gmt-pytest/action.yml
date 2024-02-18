@@ -142,7 +142,7 @@ runs:
         cd tests && ./start-test-containers.sh -d
    
     - name: Sleep for 10 seconds
-      run: sleep 10s
+      run: sleep 10
       shell: bash
 
     - name: Run Tests
