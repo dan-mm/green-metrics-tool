@@ -146,9 +146,13 @@ runs:
       shell: bash
 
     - name: Run Tests
+      if: runner.os == 'macOS'
       shell: bash
       working-directory: ./tests
       run: |
         source ../venv/bin/activate
-        python3 -m ${{ inputs.tests-command }} -rA | tee /tmp/test-results.txt
+        cd stress-application
+        docker build . -t gcb_stress_gmt_run_tmp
+        cd ..
+        python3 -m pytest -m "not no_mac_workflow" -rA | tee /tmp/test-results.txt
         cat /tmp/test-results.txt | grep -oPz '(=*) short test summary(.*\n)*' >> $GITHUB_STEP_SUMMARY
