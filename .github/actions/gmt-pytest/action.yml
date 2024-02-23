@@ -65,10 +65,13 @@ runs:
         cd stress-application
         docker build . -t gcb_stress_gmt_run_tmp
         cd ..
-        python3 -m pytest -m "not no_mac_workflow" -rA | tee /tmp/test-results.txt
+        # python3 -m pytest -m "not no_mac_workflow" -rA | tee /tmp/test-results.txt
+        python3 -m pytest test_runner.py -rA | tee /tmp/test-results.txt
 
     - name: Display Results
+      if: runner.os == 'macOS'
       shell: bash
       if: always()
       run: |
-        cat /tmp/test-results.txt | grep -oPz '(=*) short test summary(.*\n)*' >> $GITHUB_STEP_SUMMARY
+        cat /tmp/test-results.txt | grep -Eo '(=*) short test summary(.*\n)*' >> $GITHUB_STEP_SUMMARY
+
