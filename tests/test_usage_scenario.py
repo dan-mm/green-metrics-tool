@@ -97,7 +97,6 @@ def test_env_variable_skip_unsafe_true():
     assert 'TEST_TOO_LONG' not in env_var_output, Tests.assertion_info('TEST_TOO_LONG not in env vars', env_var_output)
 
 # Test allow_unsafe=true
-@pytest.mark.no_mac_workflow
 def test_env_variable_allow_unsafe_true():
     runner = Tests.setup_runner(usage_scenario='env_vars_stress_forbidden.yml', allow_unsafe=True, dev_no_metrics=True, dev_no_sleeps=True, dev_no_build=True)
     env_var_output = get_env_vars(runner)
@@ -406,6 +405,7 @@ def test_depends_on_healthcheck_error_missing():
 
 #volumes: [array] (optional)
 #Array of volumes to be mapped. Only read of runner.py is executed with --allow-unsafe flag
+@pytest.mark.no_mac_workflow
 def test_volume_bindings_allow_unsafe_true():
     create_test_file('/tmp/gmt-test-data')
     runner = Tests.setup_runner(usage_scenario='volume_bindings_stress.yml', allow_unsafe=True, dev_no_metrics=True, dev_no_sleeps=True, dev_no_build=True)
