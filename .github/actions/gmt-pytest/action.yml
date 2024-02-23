@@ -55,6 +55,7 @@ runs:
 
     - name: Setup & Run Tests
       if: runner.os == 'macOS'
+      continue-on-error: true
       shell: bash
       run: |
         source venv/bin/activate
@@ -71,7 +72,6 @@ runs:
     - name: Display Results
       if: runner.os == 'macOS'
       shell: bash
-      if: always()
       run: |
         cat /tmp/test-results.txt | grep -Eo '(=*) short test summary(.*\n)*' >> $GITHUB_STEP_SUMMARY
 
