@@ -105,6 +105,8 @@ runs:
         source venv/bin/activate
         cd tests
         if [ "$RUNNER_OS" = "macOS" ]; then
+          colima stop
+          colima start --network-address
           python3 -m pytest -m "not no_mac_workflow" -rA | tee /tmp/test-results.txt
         else # linux
           python3 -m ${{ inputs.tests-command }} -rA | tee /tmp/test-results.txt
