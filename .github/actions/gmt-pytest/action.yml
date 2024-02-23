@@ -44,6 +44,7 @@ runs:
       run: |
         if [ "$RUNNER_OS" = "macOS" ]; then
           ./install_mac.sh -p testpw -a http://api.green-coding.internal:9142 -m http://metrics.green-coding.internal:9142
+          source venv/bin/activate
           cd tests
           python3 setup-test-env.py
         else # linux
