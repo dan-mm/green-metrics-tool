@@ -21,9 +21,9 @@ runs:
       with:
         python-version: '3.10'
 
-    - id: python_cache
-      name: python cache
+    - name: python cache
       if: runner.os == 'Linux'
+      id: python_cache
       uses: actions/cache@v3
       with:
         path: venv
