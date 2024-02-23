@@ -42,21 +42,25 @@ runs:
       working-directory: ${{ inputs.gmt-directory }}
       run: |
         if [ "$RUNNER_OS" = "macOS" ]; then
-          ./install_mac.sh -p testpw -a http://api.green-coding.internal:9142 -m http://metrics.green-coding.internal:9142 -n
+          ./install_mac.sh -p testpw -a http://api.green-coding.internal:9142 -m http://metrics.green-coding.internal:9142
+          cd tests
+          python3 setup-test-env.py
         else # linux
           ./install_linux.sh -p testpw -a http://api.green-coding.internal:9142 -m http://metrics.green-coding.internal:9142 -n -t
+          source venv/bin/activate
+          python3 -m pip install -r requirements-dev.txt
+          python3 -m pip install -r metric_providers/psu/energy/ac/xgboost/machine/model/requirements.txt
+          cd tests
+          python3 setup-test-env.py --no-docker-build
         fi
-        source venv/bin/activate
-        python3 -m pip install -r requirements-dev.txt
-        python3 -m pip install -r metric_providers/psu/energy/ac/xgboost/machine/model/requirements.txt
-        cd tests
-        python3 setup-test-env.py --no-docker-build
 
     - name: Set up Docker Buildx
+      if: runner.os == "Linux"
       id: buildx
       uses: docker/setup-buildx-action@master
 
     - name: Login to Docker Registry
+      if: runner.os == "Linux"
       uses: docker/login-action@v2
       with:
         registry: ghcr.io
@@ -64,6 +68,7 @@ runs:
         password: ${{ inputs.github-token }}
 
     - name: Build docker-compose
+      if: runner.os == "Linux"
       id: build-docker-compose
       shell: bash
       working-directory: ${{ inputs.gmt-directory }}/docker
